@@ -24,7 +24,7 @@ def count_decoded_possibilities(string, count):
 def main():
     print "Starting script"
 
-    for example, expected_result in [('111', 3), ('12', 3)]:
+    for example, expected_result in [('111', 3), ('12', 3), ('34', 2)]:
 	assert count_decoded_possibilities(example, 0), expected_result
 
     print "Success !"
