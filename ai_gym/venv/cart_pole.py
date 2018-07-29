@@ -9,8 +9,10 @@ from torch.autograd import Variable
 import matplotlib.pyplot as plt
 
 # Hyperparameters
-learning_rate = 0.01
+learning_rate = 0.005
 gamma = 0.99
+dropout =0.6
+hidden_layer_length = 512
 
 env = gym.make('CartPole-v0')
 eps = np.finfo(np.float32).eps.item()
@@ -22,8 +24,8 @@ class Policy(nn.Module):
         self.state_space = env.observation_space.shape[0]
         self.action_space = env.action_space.n
 
-        self.l1 = nn.Linear(self.state_space, 128)
-        self.l2 = nn.Linear(128, self.action_space)
+        self.l1 = nn.Linear(self.state_space, hidden_layer_length)
+        self.l2 = nn.Linear(hidden_layer_length, self.action_space)
 
         self.gamma = gamma
 
@@ -34,7 +36,7 @@ class Policy(nn.Module):
     def forward(self, x):
         model = torch.nn.Sequential(
             self.l1,
-            nn.Dropout(p=0.6),
+            nn.Dropout(p=dropout),
             nn.ReLU(),
             self.l2,
             nn.Softmax(dim=-1)
