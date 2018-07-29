@@ -1,4 +1,4 @@
-### Cart Pole problem - Policy Gradient
+## Cart Pole problem - Policy Gradient
 The solution is highly inspired from this website: https://medium.com/@ts1829/policy-gradient-reinforcement-learning-in-pytorch-df1383ea0baf
 
 This problem is solved with a Neural Network and reinforcement learning. 
@@ -19,9 +19,60 @@ The notions that are used here are:
 - **Adam Optimiser**: the algorithm is an extension to stochastic gradient descent.
 - **Reward trick**: as the reward is constant for each step, what we do instead is use a long-term reward vt where vt is the discounted sum of all future rewards for the length of the episode. In this way, the longer the episode runs into the future, the greater the reward for a particular state-action pair in the present. We also discount the reward the further we go in the future: if an episode lasts 5 steps and the discount factor is 0.99, the reward for each step will be [4.90, 3.94, 2.97, 1.99, 1]
 
-#### Experiments on parameters, with 1000 episodes:
+### Experiments on parameters, with 1000 episodes:
 - Increasing the size of the hidden layers leads to a slower learn but a better score, until a point where the NN stop learning at all.
 - In a general way, the NN always overfit and stop performing after a certain among of episodes.
 - The dropout has a huge influence on the result. Disabling it leads to very bad results. But of course, the higher the dropout is, the slower the NN learns.
+- Decreasing the gamma rate has a bad influence over the network. Decreasing it with more than 1 kills the NN.
+- Increasing the learning rate:
+-- from 0.001 to 0.005 solved the problem!
+-- with an order of magnitude higher than one has a bad influence over the NN, although not as much as the gamma parameter.
 
+#### Playing with Hidden layer size
+1024 Hidden layer, not lucky
 
+![Example 1](https://github.com/jolancornevin/loving_algorithm/blob/master/docs/img/cart_pole_1.png)
+
+1024 Hidden layer
+
+![Example 2](https://github.com/jolancornevin/loving_algorithm/blob/master/docs/img/cart_pole_2.png)
+
+512 Hidden layer
+
+![Example 3](https://github.com/jolancornevin/loving_algorithm/blob/master/docs/img/cart_pole_3.png)
+
+256 Hidden layer
+
+![Example 4](https://github.com/jolancornevin/loving_algorithm/blob/master/docs/img/cart_pole_4.png)
+
+128 Hidden layer
+
+![Example 5](https://github.com/jolancornevin/loving_algorithm/blob/master/docs/img/cart_pole_5.png)
+
+#### Playing with dropout
+Dropout = 0.4
+
+![Example 6](https://github.com/jolancornevin/loving_algorithm/blob/master/docs/img/cart_pole_6.png)
+
+Dropout = 0.6
+
+![Example 5](https://github.com/jolancornevin/loving_algorithm/blob/master/docs/img/cart_pole_5.png)
+
+Dropout = 0.8
+
+![Example 7](https://github.com/jolancornevin/loving_algorithm/blob/master/docs/img/cart_pole_7.png)
+
+#### Playing with Gamma
+
+Gamma = 0.9
+
+![Example 8](https://github.com/jolancornevin/loving_algorithm/blob/master/docs/img/cart_pole_8.png)
+
+#### Playing with the Learning Rate
+Learning rate = 0.01
+
+![Example 9](https://github.com/jolancornevin/loving_algorithm/blob/master/docs/img/cart_pole_9.png)
+
+Learning rate = 0.005 **SOLVED with 640 episodes**
+
+![Example 10](https://github.com/jolancornevin/loving_algorithm/blob/master/docs/img/cart_pole_10.png)
