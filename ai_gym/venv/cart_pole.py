@@ -1,13 +1,12 @@
-import ipdb
-
 import gym
 import numpy as np
 
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
 import torch.optim as optim
 from torch.autograd import Variable
+
+import matplotlib.pyplot as plt
 
 # Hyperparameters
 learning_rate = 0.01
@@ -108,6 +107,9 @@ def update_policy():
 def main(episodes):
     running_reward = 10
 
+    average_times = []
+    episodes_list = []
+
     for episode in range(episodes):
         state = env.reset()  # Reset environment and record the starting state
         done = False
@@ -127,7 +129,10 @@ def main(episodes):
         update_policy()
         policy.reset_var()
 
+
         if episode % 10 == 0:
+            average_times.append(running_reward)
+            episodes_list.append(episode)
             print('Episode {}\tLast length: {:5d}\tAverage length: {:.2f}'.format(episode, time, running_reward))
         if running_reward > env.spec.reward_threshold:
             print("Solved! Running reward is now {} and the last episode runs to {} time steps!".format(running_reward, time))
@@ -136,6 +141,12 @@ def main(episodes):
     # Save and intialize episode history counters
     policy.policy_history = Variable(torch.Tensor())
     policy.reward_episode = []
+
+    plt.plot(episodes_list, average_times)
+    plt.title('Cart Pole challenge \n %s nn, %s learning_rate, %s gamma and %s dropout' % (hidden_layer_length, learning_rate, gamma, dropout))
+    plt.xlabel('Episode')
+    plt.ylabel('Average time')
+    plt.show()
 
 
 main(1000)
