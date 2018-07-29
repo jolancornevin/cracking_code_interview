@@ -1,3 +1,11 @@
+# Venv
+ai_gym/venv/.Python
+ai_gym/venv/Pipfile
+ai_gym/venv/bin/
+ai_gym/venv/include/
+ai_gym/venv/lib/
+ai_gym/venv/pip-selfcheck.json
+
 # Prerequisites
 *.d
 
